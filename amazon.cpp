@@ -9,6 +9,8 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
+#include "mydatastore.cpp"
 
 using namespace std;
 struct ProdNameSorter {
@@ -29,7 +31,7 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    MyDataStore ds;
 
 
 
@@ -99,22 +101,131 @@ int main(int argc, char* argv[])
                 }
                 done = true;
             }
-	    /* Add support for other commands here */
+            /* Add support for other commands here */
 
+            // ohhhhh my god this nesting is so ugly and hard to read
+            else if ( cmd == "ADD") {
+                string username;
+                int hitNum;
 
+                // get username and hit number, only proceed if they're given
+                if (ss >> username >> hitNum) {
+                    // check that hit number is valid
+                    if (hitNum < 1 || hitNum > (int)hits.size()) {
+                        cout << "Invalid request" << endl;
+                        continue;
+                    }
 
+                    User* user = nullptr;
 
+                    // find user with given username
+                    for (User* u : ds.getUsers()) {
+                        if (u->getName() == username) {
+                            user = u;
+                            break;
+                        }
+                    }
+                    // error handling for username that doesn't exist
+                    if (user == nullptr) {
+                        cout << "Invalid request" << endl;
+                        continue;
+                    }
+                    ds.addToCart(user, hits[hitNum - 1]);
+                    cout << "Added to cart" << endl;
+                }
+                else {
+                    cout << "Invalid request" << endl;
+                }
+            }
+            else if ( cmd == "VIEWCART") {
+                string username;
+                if (ss >> username) {
+                    User* user = nullptr;
+
+                    // only populate user if we find a matching username
+                    for (User* u : ds.getUsers()) {
+                        if (u->getName() == username) {
+                            user = u;
+                            break;
+                        }
+                    }
+
+                    // error handling for invalid username
+                    if (user == nullptr) {
+                        cout << "Invalid username" << endl;
+                        continue;
+                    }
+
+                    // get the actual cart vector for the user
+                    const vector<Product*>& cart = ds.getCart(user);
+                    if (cart.empty()) {
+                        cout << "Empty cart" << endl;
+                        continue;
+                    }
+
+                    // display cart contents
+                    int itemNo = 1;
+                    for (Product* p : cart) {
+                        cout << "Item " << itemNo << endl;
+                        cout << p->displayString() << endl;
+                        cout << endl;
+                        itemNo++;
+                    }
+                }
+                else {
+                    cout << "Invalid request" << endl;
+                }
+            }
+            else if ( cmd == "BUYCART") {
+                string username;
+                if (ss >> username) {
+                    User* user = nullptr;
+
+                    // only populate user if we find a matching username
+                    for (User* u : ds.getUsers()) {
+                        if (u->getName() == username) {
+                            user = u;
+                            break;
+                        }
+                    }
+
+                    // error handling for invalid username
+                    if (user == nullptr) {
+                        cout << "Invalid username" << endl;
+                        continue;
+                    }
+
+                    // get the actual cart vector for the user
+                    vector<Product*> cart = ds.getCart(user);
+                    if (cart.empty()) {
+                        cout << "Empty cart" << endl;
+                        continue;
+                    }
+
+                    int i = 0;
+                    while (i < (int)cart.size()) {
+                        Product* p = cart[i];
+                        if (p->getQty() > 0 && user->getBalance() >= p->getPrice()) {
+                            user->deductAmount(p->getPrice());
+                            p->subtractQty(1);
+                            cart.erase(cart.begin() + i);
+                        } else {
+                            i++;
+                        }
+                    }
+                } else {
+                    cout << "Invalid request" << endl;
+                }
+            }
             else {
                 cout << "Unknown command" << endl;
             }
         }
-
     }
     return 0;
 }
 
-void displayProducts(vector<Product*>& hits)
-{
+void displayProducts(vector<Product*>& hits){
     int resultNo = 1;
     if (hits.begin() == hits.end()) {
     	cout << "No results found!" << endl;
