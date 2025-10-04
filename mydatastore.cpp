@@ -93,6 +93,7 @@ void MyDataStore::addToCart(User* u, Product* product) {
         return;
     }
 
+    /*
     // error handling for duplicate products in cart
     std::map<std::string, std::vector<Product*>>::iterator cartIt = carts_.find(u->getName()); // this is in <map> so it should be fine
 
@@ -104,16 +105,16 @@ void MyDataStore::addToCart(User* u, Product* product) {
             }
         }
     }
-
+    */
 
     // yeah this range based loop is not working and i have 1 hour left
-    /*
+    
     for(Product* p : carts_[u->getName()]) {
         if (p == product) {
             return; // product already in cart, do nothing
         }
     }
-    */
+    
 
     // add product to user's cart (handles diff than usual bc it's a map)
     carts_[u->getName()].push_back(product);
