@@ -130,9 +130,9 @@ std::string ProductBookParser::categoryID()
  */
 Product* ProductBookParser::makeProduct()
 {
-  Product book = new Product(this->categoryID(), prodName_, price_, qty_);
-  book->isbn_ = isbn_;
-  book->author_ = author_;
+    // call book constructor with parsed vars
+  Book* book = new Book(categoryID(), prodName_, price_, qty_, isbn_, author_);
+  return book;
 }
 
 
@@ -186,9 +186,9 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
-
-
-
+    // call clothing constructor with parsed vars
+  Clothing* cloth = new Clothing(categoryID(), prodName_, price_, qty_, size_, brand_);
+  return cloth;
 }
 
 
@@ -246,6 +246,7 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
-
-
+    // call movie constructor with parsed vars
+  Movie* movie = new Movie(categoryID(), prodName_, price_, qty_, genre_, rating_);
+  return movie;
 }
