@@ -195,6 +195,7 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
+                    /*
                     std::vector<Product*> cart = ds.getCart(user);
                     // iterate through cart and buy what we can
                     int i = 0;
@@ -210,6 +211,8 @@ int main(int argc, char* argv[])
                             i++;
                         }
                     }
+                    */
+                    ds.buyCart(user); // try using helper function instead
                 } 
                 else {
                     //cout << "Invalid request" << endl;
