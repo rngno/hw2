@@ -7,11 +7,11 @@ MyDataStore::MyDataStore() {}
 
 // since products and users are dynamically allocated, need to free them here
 MyDataStore::~MyDataStore() {
-    for (Product* p : products_) {
-        delete p;
+    for (unsigned int i = 0; i < products_.size(); i++) {
+        delete products_[i];
     }
-    for (User* u : users_) {
-        delete u;
+    for (unsigned int i = 0; i < users_.size(); i++) {
+        delete users_[i];
     }
 }
 
@@ -72,14 +72,14 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
 void MyDataStore::dump(std::ostream& ofile) {
     // head off sections for parsing later
     ofile << "<products>\n";
-    for (Product* p : products_) {
-        p->dump(ofile);
+    for (unsigned int i = 0; i < products_.size(); i++) {
+        products_[i]->dump(ofile);
     }
 
     // close products section and open users section
     ofile << "</products>\n<users>\n";
-    for (User* u : users_) {
-        u->dump(ofile);
+    for (unsigned int i = 0; i < users_.size(); i++) {
+        users_[i]->dump(ofile);
     }
 
     // close users section

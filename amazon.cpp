@@ -10,7 +10,6 @@
 #include "product_parser.h"
 #include "util.h"
 #include "mydatastore.h"
-#include "mydatastore.cpp"
 
 using namespace std;
 struct ProdNameSorter {
@@ -119,9 +118,9 @@ int main(int argc, char* argv[])
                     User* user = nullptr;
 
                     // find user with given username
-                    for (User* u : ds.getUsers()) {
-                        if (u->getName() == username) {
-                            user = u;
+                    for (unsigned int i = 0; i < ds.getUsers().size(); i++) {
+                        if (ds.getUsers()[i]->getName() == username) {
+                            user = ds.getUsers()[i];
                             break;
                         }
                     }
@@ -143,9 +142,9 @@ int main(int argc, char* argv[])
                     User* user = nullptr;
 
                     // only populate user if we find a matching username
-                    for (User* u : ds.getUsers()) {
-                        if (u->getName() == username) {
-                            user = u;
+                    for (unsigned int i = 0; i < ds.getUsers().size(); i++) {
+                        if (ds.getUsers()[i]->getName() == username) {
+                            user = ds.getUsers()[i];
                             break;
                         }
                     }
@@ -165,9 +164,9 @@ int main(int argc, char* argv[])
 
                     // display cart contents
                     int itemNo = 1;
-                    for (Product* p : cart) {
+                    for (unsigned int i = 0; i < cart.size(); i++) {
                         cout << "Item " << itemNo << endl;
-                        cout << p->displayString() << endl;
+                        cout << cart[i]->displayString() << endl;
                         cout << endl;
                         itemNo++;
                     }
@@ -182,9 +181,9 @@ int main(int argc, char* argv[])
                     User* user = nullptr;
 
                     // only populate user if we find a matching username
-                    for (User* u : ds.getUsers()) {
-                        if (u->getName() == username) {
-                            user = u;
+                    for (unsigned int i = 0; i < ds.getUsers().size(); i++) {
+                        if (ds.getUsers()[i]->getName() == username) {
+                            user = ds.getUsers()[i];
                             break;
                         }
                     }
