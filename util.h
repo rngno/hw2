@@ -18,7 +18,7 @@ std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
     // now instead of an O(nlogn) solution, we can do this in O(n) time, but im feeling too lazy to actually implement that tonight (my bad)
 
     // go through each element in s1, and check if it's in s2
-    for(const auto& elt : s1) {
+    for(const T& elt : s1) {
         // if it's in s2, add it to the result set
         if(s2.find(elt) != s2.end()) {
             result.insert(elt);
@@ -27,6 +27,7 @@ std::set<T> setIntersection(std::set<T>& s1, std::set<T>& s2)
 
     return result;
 }
+
 template <typename T>
 std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)
 {
