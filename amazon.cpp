@@ -10,6 +10,7 @@
 #include "product_parser.h"
 #include "util.h"
 #include "mydatastore.h"
+#include "mydatastore.cpp"
 
 using namespace std;
 struct ProdNameSorter {
