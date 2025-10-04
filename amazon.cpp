@@ -195,8 +195,21 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
-                    // helper function in mydatastore to buy cart for a given user
-                    ds.buyCart(user);
+                    std::vector<Product*>& cart = ds.getCart(user);
+                    // iterate through cart and buy what we can
+                    int i = 0;
+                    while (i < (int)cart.size()) {
+                        Product* p = cart[i];
+                        if (p->getQty() > 0 && user->getBalance() >= p->getPrice()) {
+                            user->deductAmount(p->getPrice());
+                            p->subtractQty(1);
+                            cart.erase(cart.begin() + i);
+                        } 
+                        // move on if not purchasable or not enough balance
+                        else {
+                            i++;
+                        }
+                    }
                 } 
                 else {
                     //cout << "Invalid request" << endl;
