@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
-                    std::vector<Product*>& cart = ds.getCart(user);
+                    std::vector<Product*> cart = ds.getCart(user);
                     // iterate through cart and buy what we can
                     int i = 0;
                     while (i < (int)cart.size()) {
