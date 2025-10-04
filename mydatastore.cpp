@@ -94,9 +94,8 @@ void MyDataStore::addToCart(User* u, Product* product) {
     }
 
     // error handling for duplicate products in cart
-    std::vector<Product*> userCart = getCart(u);
     // walk through all products in cart and see if product is already there
-    for(Product* p : userCart) {
+    for(Product* p : carts_[u->getName()]) {
         if (p == product) {
             return; // product already in cart, do nothing
         }
