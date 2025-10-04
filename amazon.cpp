@@ -196,7 +196,7 @@ int main(int argc, char* argv[])
                     }
 
                     // get the actual cart vector for the user
-                    vector<Product*> cart = ds.getCart(user);
+                    vector<Product*>& cart = ds.getCart(user);
                     if (cart.empty()) {
                         cout << "Empty cart" << endl;
                         continue;

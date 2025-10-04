@@ -95,46 +95,22 @@ void MyDataStore::addToCart(User* u, Product* product) {
 
     // error handling for duplicate products in cart
     // walk through all products in cart and see if product is already there
-    std::map<std::string, std::vector<Product*>>::iterator cartIt = carts_.find(u->getName());
-    // check if cart actually exists first
-    if (cartIt != carts_.end()) {
-        // check for duplicate products
-        for (unsigned int i = 0; i < cartIt->second.size(); i++) {
-            if (cartIt->second[i] == product) {
-                return; // product already in cart, skip
-            }
-        }
-    }
-
-
-
-    // not working error handling for duplicate products in cart
-    /*
     for(Product* p : carts_[u->getName()]) {
         if (p == product) {
             return; // product already in cart, do nothing
         }
     }
-    */
 
     // add product to user's cart (handles diff than usual bc it's a map)
     carts_[u->getName()].push_back(product);
 }
 
 // view cart for a given username
-std::vector<Product*> MyDataStore::getCart(User* u) {
+std::vector<Product*>& MyDataStore::getCart(User* u) {
     // error handling for invalid user
     if(u == nullptr){
-        return std::vector<Product*>(); // return empty vector
-    }
-
-    // ohhh my god finding this iterator syntax was annoying
-    // error handling for empty cart
-    std::map<std::string, std::vector<Product*>>::const_iterator cartIt = carts_.find(u->getName());
-    if (cartIt == carts_.end() || cartIt->second.empty()) {
-        // Debug statement'
-        //std::cout << "Cart is empty" << std::endl;
-        return std::vector<Product*>(); // return empty vector  
+        std::vector<Product*> emptyCart;
+        return emptyCart; // return empty vector
     }
 
     // only get here if we find the cart for the specific user
