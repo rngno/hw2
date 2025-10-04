@@ -202,6 +202,7 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
+                    // iterate through cart and buy what we can
                     int i = 0;
                     while (i < (int)cart.size()) {
                         Product* p = cart[i];
@@ -209,12 +210,16 @@ int main(int argc, char* argv[])
                             user->deductAmount(p->getPrice());
                             p->subtractQty(1);
                             cart.erase(cart.begin() + i);
-                        } else {
+                        } 
+                        // move on if not purchasable or not enough balance
+                        else {
                             i++;
                         }
                     }
-                } else {
-                    cout << "Invalid request" << endl;
+                } 
+                else {
+                    //cout << "Invalid request" << endl;
+                    done = true;
                 }
             }
             else {
