@@ -7,10 +7,10 @@ MyDataStore::MyDataStore() {}
 
 // since products and users are dynamically allocated, need to free them here
 MyDataStore::~MyDataStore() {
-    for (auto p : products_) {
+    for (Product* p : products_) {
         delete p;
     }
-    for (auto u : users_) {
+    for (User* u : users_) {
         delete u;
     }
 }
@@ -37,9 +37,9 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
     }
 
     // for each term, get the products that match it
-    for (const auto& term : terms) {
+    for (const std::string& term : terms) {
         std::set<Product*> tempSet;
-        for (auto p : products_) {
+        for (Product* p : products_) {
             if (p->keywords().count(term) > 0) {
                 tempSet.insert(p);
             }
@@ -72,13 +72,13 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
 void MyDataStore::dump(std::ostream& ofile) {
     // head off sections for parsing later
     ofile << "<products>\n";
-    for (auto p : products_) {
+    for (Product* p : products_) {
         p->dump(ofile);
     }
 
     // close products section and open users section
     ofile << "</products>\n<users>\n";
-    for (auto u : users_) {
+    for (User* u : users_) {
         u->dump(ofile);
     }
 
