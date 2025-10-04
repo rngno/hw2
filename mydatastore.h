@@ -21,7 +21,7 @@ public:
     void dump(std::ostream& ofile) override;
     std::vector<User*> getUsers() const { return users_; }// need this for amazon.cpp to get users for ADD command
     void addToCart(User* u, Product* p); // also need this for amazon.cpp to add products to user's cart
-    std::vector<Product*>& getCart(User* u); // view cart for a given username
+    std::vector<Product*> getCart(User* u); // view cart for a given username
     void buyCart(User* u); // buy cart for a given username
 
 private:

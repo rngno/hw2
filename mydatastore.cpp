@@ -106,11 +106,10 @@ void MyDataStore::addToCart(User* u, Product* product) {
 }
 
 // view cart for a given username
-std::vector<Product*>& MyDataStore::getCart(User* u) {
+std::vector<Product*> MyDataStore::getCart(User* u) {
     // error handling for invalid user
     if(u == nullptr){
-        std::vector<Product*> emptyCart;
-        return emptyCart; // return empty vector
+        return std::vector<Product*>(); // return empty vector
     }
 
     // only get here if we find the cart for the specific user
